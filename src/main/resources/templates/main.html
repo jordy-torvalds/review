@@ -16,7 +16,7 @@
 <input type="text" id="outputAddress" name="outputAddress" readonly>
 <br>
 <br>
-<input type="button" id="clearTextBox" name="clearTextBox" value="text all clear">
+<input type="button" id="clearTextBox" name="clearTextBox" value="text all clear" onclick="clearText();">
 <input type="button" id="excelDownloadBtn" name="excelDownloadBtn" value="엑셀 다운로드">
 <br>
 <table border="1" bordercolor="blue" width ="500" height="150" align = "left" >
@@ -42,6 +42,11 @@
 </body>
 
 <script>
+
+  $(document).ready(function(){
+    previousSearch();
+  });
+
   function addressSearch() {
     const inputAddress = $("#inputAddress").val();
 
@@ -59,11 +64,37 @@
       async:true,
       type:'POST',
       data: JSON.stringify(param),
-      url:"/search",
+      url:"/search/api",
       dataType: "json",
       contentType :"application/json; charset=utf-8",
       success : function(data) {
-        alert("완료되었습니다.");
+        alert("완료되었습니다." + data.result);
+        $("#outputAddress").val(data.result);
+        previousSearch();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert("ERROR : " + textStatus + " : " + errorThrown);
+      }
+   });
+  }
+
+  function clearText() {
+    $("#inputAddress").val("");
+    $("#outputAddress").val("");
+  }
+
+  function previousSearch() {
+    const param = {};
+
+    $.ajax({
+      async:true,
+      type:'POST',
+      data: JSON.stringify(param),
+      url:"/search/history",
+      dataType: "json",
+      contentType :"application/json; charset=utf-8",
+      success : function(data) {
+        console.log("완료되었습니다.");
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("ERROR : " + textStatus + " : " + errorThrown);
