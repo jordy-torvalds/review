@@ -33,8 +33,8 @@ public class TypeConverter {
         StringBuilder paramBuilder = new StringBuilder();
         for (String key : map.keySet()) {
             paramBuilder.append(paramBuilder.length() > 0 ? "&" : "");
-            paramBuilder.append(String.format("%s=%s", urlEncodeUTF8(key),
-                    urlEncodeUTF8(map.get(key).toString())));
+            paramBuilder.append(String.format("%s=%s", key,
+                    map.get(key).toString()));
         }
         return paramBuilder.toString();
     }
