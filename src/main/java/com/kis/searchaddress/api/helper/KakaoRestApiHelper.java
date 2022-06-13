@@ -12,10 +12,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static com.kis.searchaddress.api.helper.TypeConverter.mapToHttpParams;
 
