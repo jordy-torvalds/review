@@ -4,7 +4,7 @@ import com.kis.searchaddress.dto.SearchHistoryDTO;
 
 import java.util.List;
 
-public interface MainService {
+public interface HistoryService {
 
     boolean saveHistory(SearchHistoryDTO dto);
 
