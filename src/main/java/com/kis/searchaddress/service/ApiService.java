@@ -5,10 +5,11 @@ import com.kis.searchaddress.dto.request.ApiRequestDTO;
 import com.kis.searchaddress.dto.response.address.AddressApiResponseDTO;
 import com.kis.searchaddress.dto.response.keyword.KeywordApiResponseDTO;
 
-import java.util.List;
 
-public interface AddressSearchService {
-    public AddressApiResponseDTO addressApiResult(ApiRequestDTO dto) throws JsonProcessingException;
+public interface ApiService {
+    AddressApiResponseDTO addressApi(ApiRequestDTO dto) throws JsonProcessingException;
 
-    public KeywordApiResponseDTO keywordApiResult(ApiRequestDTO dto) throws JsonProcessingException;
+    KeywordApiResponseDTO keywordApi(ApiRequestDTO dto) throws JsonProcessingException;
+
+    String searchResult(AddressApiResponseDTO addressDto, KeywordApiResponseDTO keywordDto);
 }

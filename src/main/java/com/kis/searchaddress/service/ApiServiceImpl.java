@@ -3,19 +3,21 @@ package com.kis.searchaddress.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kis.searchaddress.api.constants.EndPoint;
 import com.kis.searchaddress.api.helper.KakaoRestApiHelper;
-import com.kis.searchaddress.api.helper.WebClientHelper;
 import com.kis.searchaddress.dto.request.ApiRequestDTO;
 import com.kis.searchaddress.dto.response.address.AddressApiResponseDTO;
+import com.kis.searchaddress.dto.response.address.Document;
 import com.kis.searchaddress.dto.response.keyword.KeywordApiResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.kis.searchaddress.api.helper.TypeConverter.*;
 
 @Service
 @Slf4j
-public class AddressSearchServiceImpl implements AddressSearchService {
+public class ApiServiceImpl implements ApiService {
 
     @Autowired
     KakaoRestApiHelper helper;
@@ -24,7 +26,7 @@ public class AddressSearchServiceImpl implements AddressSearchService {
 //    WebClientHelper helper;
 
     @Override
-    public AddressApiResponseDTO addressApiResult(ApiRequestDTO dto) throws JsonProcessingException {
+    public AddressApiResponseDTO addressApi(ApiRequestDTO dto) throws JsonProcessingException {
         String result = helper.request(EndPoint.ADDRESS.getType(), EndPoint.ADDRESS.getUrl(), apiRequestDTOToMap(dto));
 
         AddressApiResponseDTO addressApiResponseDTO = stringToDTO(result, AddressApiResponseDTO.class);
@@ -34,12 +36,19 @@ public class AddressSearchServiceImpl implements AddressSearchService {
     }
 
     @Override
-    public KeywordApiResponseDTO keywordApiResult(ApiRequestDTO dto) throws JsonProcessingException {
+    public KeywordApiResponseDTO keywordApi(ApiRequestDTO dto) throws JsonProcessingException {
         String result = helper.request(EndPoint.KEYWORD.getType(), EndPoint.KEYWORD.getUrl(), apiRequestDTOToMap(dto));
 
         KeywordApiResponseDTO keywordApiResponseDTO = stringToDTO(result, KeywordApiResponseDTO.class);
         log.info(keywordApiResponseDTO.toString());
 
         return keywordApiResponseDTO;
+    }
+
+    //두 API 결과 가지고 ㅇㅇ로, ㅇㅇ길 도출 -> 추후 완성 예정
+    @Override
+    public String searchResult(AddressApiResponseDTO addressDto, KeywordApiResponseDTO keywordDto) {
+        List<Document> documents = addressDto.getDocuments();
+        return documents.get(0).getAddress_name();
     }
 }
