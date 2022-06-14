@@ -68,9 +68,13 @@
       dataType: "json",
       contentType :"application/json; charset=utf-8",
       success : function(data) {
-        alert("완료되었습니다." + data.result);
-        $("#outputAddress").val(data.result);
-        previousSearch();
+        if(data.resultCd == "S") {
+          alert("완료되었습니다." + data.addressResult);
+          $("#outputAddress").val(data.addressResult);
+          previousSearch();
+        } else {
+          alert("결과값이 없습니다.");
+        }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("ERROR : " + textStatus + " : " + errorThrown);
