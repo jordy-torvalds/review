@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.kis.searchaddress.api.helper.TypeConverter.dtoToJsonString;
+
 /**
  * 주소 검색을 수행하는 Controller.
  * Kakao 지도 API 이용
@@ -33,13 +35,10 @@ public class SearchController {
     @Autowired
     HistoryServiceImpl historyService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @PostMapping("/api")
     public String addressSearch(@RequestBody ApiRequestDTO dto) {
-        log.info("dto.toString(): "+dto.toString());
+        log.info("dto.toString(): " + dto.toString());
         ApiResultResponseDTO apiResult;
-        String apiResultJson = "";
 
         try {
             AddressApiResponseDTO addressApiDTO = apiService.addressApi(dto);
@@ -47,44 +46,27 @@ public class SearchController {
 
             String searchResult = apiService.searchResult(addressApiDTO, keywordApiDTO);
 
-            log.info("searchResult::: "+ searchResult);
+            log.info("searchResult::: " + searchResult);
 
             apiResult = new ApiResultResponseDTO("S", searchResult);
 
-            HistoryResponseDTO historyDTO = new HistoryResponseDTO(dto.toString(), searchResult);
+            HistoryResponseDTO historyDTO = new HistoryResponseDTO(dto.getQuery(), searchResult);
             log.info(historyDTO.toString());
 
             historyService.saveHistory(historyDTO);
         } catch (JsonProcessingException e) {
-            log.info("[addressSearch] JsonProcessingException 발생::: "+ e.getMessage());
+            log.info("[addressSearch] JsonProcessingException 발생::: " + e.getMessage());
 
-            apiResult = new ApiResultResponseDTO("F","");
+            apiResult = new ApiResultResponseDTO("F", "");
         }
 
-        try {
-            apiResultJson = objectMapper.writeValueAsString(apiResult);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        return apiResultJson;
+        return dtoToJsonString(apiResult);
     }
 
     @PostMapping("/history")
     public String historySearch() {
         List<HistoryResponseDTO> allHistory = historyService.findAllHistory();
-        String historyJson = "";
 
-        for (int i = 0; i < allHistory.size(); i++) {
-            log.info(i + " ::: "+ allHistory.get(i).toString());
-        }
-
-        try {
-            historyJson = objectMapper.writeValueAsString(allHistory);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        return historyJson;
+        return dtoToJsonString(allHistory);
     }
 }
