@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>[한국투자증권] 주소 찾기 프로그램</title>
+    <meta charset="UTF-8">
+    <title>[한국투자증권] 주소 찾기 프로그램</title>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -19,25 +19,20 @@
 <input type="button" id="clearTextBox" name="clearTextBox" value="text all clear" onclick="clearText();">
 <input type="button" id="excelDownloadBtn" name="excelDownloadBtn" value="엑셀 다운로드">
 <br>
-<table border="1" bordercolor="blue" width ="500" height="150" align = "left" >
-  <tr bgcolor="blue" align ="center">
-    <p><td colspan = "3" span style="color:white">이전 검색 결과값</td></p>
-  </tr>
-  <tr align = "center" bgcolor="skybule">
-    <td>번호</td>
-    <td>입력 값</td>
-    <td>검색 결과값</td>
-  </tr>
-  <tr>
-    <td>월급!</td>
-    <td>1,000,000</td>
-    <td>ㅁㄴㅇㅁㄹ</td>
-  </tr>
-  <tr>
-    <td>점심값</td>
-    <td>ㅂㅈㄷㄱ</td>
-    <td>5,000</td>
-  </tr>
+<table border="1" bordercolor="blue" width="500" height=”auto” align="left">
+    <tr bgcolor="blue" align="center" height="30">
+        <p>
+        <td colspan="3" span style="color:white">이전 검색 결과값</td>
+        </p>
+    </tr>
+    <tr align="center" bgcolor="skybule" height="20">
+        <td>번호</td>
+        <td>입력 값</td>
+        <td>검색 결과값</td>
+    </tr>
+    <tbody id="dynamicTbody">
+
+    </tbody>
 </table>
 </body>
 
@@ -88,22 +83,39 @@
   }
 
   function previousSearch() {
-    const param = {};
-
     $.ajax({
       async:true,
       type:'POST',
-      data: JSON.stringify(param),
       url:"/search/history",
       dataType: "json",
       contentType :"application/json; charset=utf-8",
       success : function(data) {
         console.log("완료되었습니다.");
+        tableCreate(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("ERROR : " + textStatus + " : " + errorThrown);
       }
    });
   }
+
+  function tableCreate(data) {
+    var html = '';
+
+    $.each(data, function(idx, item) {
+      const num = idx + 1;
+      html += '<tr height="20">';
+      html += '<td>'+num+'</td>';
+      html += '<td>'+item.input+'</td>';
+      html += '<td>'+item.searchResult+'</td>';
+      html += '</tr>';
+    });
+
+    $("#dynamicTbody").empty();
+    $("#dynamicTbody").append(html);
+  }
+
+
+
 </script>
 </html>
