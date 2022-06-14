@@ -1,4 +1,4 @@
-package com.kis.searchaddress.dto;
+package com.kis.searchaddress.dto.response.history;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchHistoryDTO {
+public class HistoryResponseDTO {
     private String input;
     private String searchResult;
 }

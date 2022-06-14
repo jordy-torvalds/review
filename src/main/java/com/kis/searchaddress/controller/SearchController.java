@@ -1,10 +1,10 @@
 package com.kis.searchaddress.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kis.searchaddress.dto.SearchHistoryDTO;
+import com.kis.searchaddress.dto.response.history.HistoryResponseDTO;
 import com.kis.searchaddress.dto.request.ApiRequestDTO;
-import com.kis.searchaddress.dto.response.address.AddressApiResponseDTO;
-import com.kis.searchaddress.dto.response.keyword.KeywordApiResponseDTO;
+import com.kis.searchaddress.dto.response.kakaoApi.address.AddressApiResponseDTO;
+import com.kis.searchaddress.dto.response.kakaoApi.keyword.KeywordApiResponseDTO;
 import com.kis.searchaddress.service.ApiServiceImpl;
 import com.kis.searchaddress.service.HistoryServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +46,10 @@ public class SearchController {
             result = "{\"result\":\""+s+"\"}";
             log.info(result);
 
-            SearchHistoryDTO searchHistoryDTO = new SearchHistoryDTO(dto.toString(), s);
-            log.info(searchHistoryDTO.toString());
+            HistoryResponseDTO historyDTO = new HistoryResponseDTO(dto.toString(), s);
+            log.info(historyDTO.toString());
 
-            historyService.saveHistory(searchHistoryDTO);
+            historyService.saveHistory(historyDTO);
         } catch (JsonProcessingException e) {
             log.info("[addressSearch] JsonProcessingException 발생::: "+ e.getMessage());
         }
@@ -59,7 +59,7 @@ public class SearchController {
 
     @PostMapping("/history")
     public String historySearch() {
-        List<SearchHistoryDTO> allHistory = historyService.findAllHistory();
+        List<HistoryResponseDTO> allHistory = historyService.findAllHistory();
 
         for (int i = 0; i < allHistory.size(); i++) {
             log.info(i + " ::: "+ allHistory.get(i).toString());

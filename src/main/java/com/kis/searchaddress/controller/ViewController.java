@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @Slf4j
-public class MainController {
+public class ViewController {
 
     @GetMapping("/main")
-    public ModelAndView mainView(Model model) {
+    public ModelAndView mainView() {
         return new ModelAndView("main");
     }
 }

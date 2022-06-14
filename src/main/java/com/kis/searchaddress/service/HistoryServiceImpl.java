@@ -1,7 +1,7 @@
 package com.kis.searchaddress.service;
 
-import com.kis.searchaddress.dao.SearchHistoryDAO;
-import com.kis.searchaddress.dto.SearchHistoryDTO;
+import com.kis.searchaddress.dao.HistoryDAO;
+import com.kis.searchaddress.dto.response.history.HistoryResponseDTO;
 import com.kis.searchaddress.repository.HistoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ public class HistoryServiceImpl implements HistoryService {
     HistoryRepository historyRepository;
 
     @Override
-    public boolean saveHistory(SearchHistoryDTO dto) {
+    public boolean saveHistory(HistoryResponseDTO dto) {
         // 변환
-        SearchHistoryDAO searchHistoryDAO = new SearchHistoryDAO(dto.getInput(), dto.getSearchResult());
-        return historyRepository.saveHistory(searchHistoryDAO);
+        HistoryDAO historyDAO = new HistoryDAO(dto.getInput(), dto.getSearchResult());
+        return historyRepository.saveHistory(historyDAO);
     }
 
     @Override
-    public List<SearchHistoryDTO> findAllHistory() {
-        List<SearchHistoryDTO> dto = new ArrayList<>();
-        List<SearchHistoryDAO> dao = historyRepository.findAllHistory();
+    public List<HistoryResponseDTO> findAllHistory() {
+        List<HistoryResponseDTO> dto = new ArrayList<>();
+        List<HistoryDAO> dao = historyRepository.findAllHistory();
 
         // 변환
-        for (SearchHistoryDAO searchHistoryDAO : dao) {
-            SearchHistoryDTO searchHistoryDTO = new SearchHistoryDTO(searchHistoryDAO.getInput(), searchHistoryDAO.getSearchResult());
+        for (HistoryDAO historyDAO : dao) {
+            HistoryResponseDTO searchHistoryDTO = new HistoryResponseDTO(historyDAO.getInput(), historyDAO.getSearchResult());
             dto.add(searchHistoryDTO);
         }
 

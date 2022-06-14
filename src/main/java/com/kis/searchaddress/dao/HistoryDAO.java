@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchHistoryDAO {
+public class HistoryDAO {
     private String input;
     private String searchResult;
 }

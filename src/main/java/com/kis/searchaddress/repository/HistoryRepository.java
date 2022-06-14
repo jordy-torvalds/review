@@ -1,6 +1,6 @@
 package com.kis.searchaddress.repository;
 
-import com.kis.searchaddress.dao.SearchHistoryDAO;
+import com.kis.searchaddress.dao.HistoryDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -10,15 +10,15 @@ import java.util.List;
 @Repository
 @Slf4j
 public class HistoryRepository {
-    private static List<SearchHistoryDAO> store = new ArrayList<>();
+    private static List<HistoryDAO> store = new ArrayList<>();
 
-    public boolean saveHistory(SearchHistoryDAO dao) {
+    public boolean saveHistory(HistoryDAO dao) {
         store.add(dao);
 
         return true;
     }
 
-    public List<SearchHistoryDAO> findAllHistory() {
+    public List<HistoryDAO> findAllHistory() {
         return store;
     }
 }

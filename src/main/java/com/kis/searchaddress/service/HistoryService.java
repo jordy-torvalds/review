@@ -1,12 +1,12 @@
 package com.kis.searchaddress.service;
 
-import com.kis.searchaddress.dto.SearchHistoryDTO;
+import com.kis.searchaddress.dto.response.history.HistoryResponseDTO;
 
 import java.util.List;
 
 public interface HistoryService {
 
-    boolean saveHistory(SearchHistoryDTO dto);
+    boolean saveHistory(HistoryResponseDTO dto);
 
-    List<SearchHistoryDTO> findAllHistory();
+    List<HistoryResponseDTO> findAllHistory();
 }

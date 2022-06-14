@@ -1,4 +1,4 @@
-package com.kis.searchaddress.dto.response.keyword;
+package com.kis.searchaddress.dto.response.kakaoApi.keyword;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

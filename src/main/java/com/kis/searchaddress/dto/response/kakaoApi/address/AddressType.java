@@ -1,4 +1,4 @@
-package com.kis.searchaddress.dto.response.address;
+package com.kis.searchaddress.dto.response.kakaoApi.address;
 
 /*
 address_name의 값의 타입(Type). REGION(지명), ROAD(도로명), REGION_ADDR(지번 주소), ROAD_ADDR (도로명 주소) 중 하나
