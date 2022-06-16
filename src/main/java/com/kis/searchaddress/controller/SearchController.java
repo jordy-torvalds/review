@@ -48,16 +48,22 @@ public class SearchController {
 
             log.info("searchResult::: " + searchResult);
 
-            apiResult = new ApiResultResponseDTO("S", searchResult);
-
-            HistoryResponseDTO historyDTO = new HistoryResponseDTO(dto.getQuery(), searchResult);
-            log.info(historyDTO.toString());
-
-            historyService.saveHistory(historyDTO);
+            if ("".equals(searchResult)) {
+                apiResult = new ApiResultResponseDTO("F", searchResult);
+            } else {
+                apiResult = new ApiResultResponseDTO("S", searchResult);
+            }
         } catch (JsonProcessingException e) {
             log.info("[addressSearch] JsonProcessingException 발생::: " + e.getMessage());
 
             apiResult = new ApiResultResponseDTO("F", "");
+        }
+
+        if("S".equals(apiResult.getResultCd())) {
+            HistoryResponseDTO historyDTO = new HistoryResponseDTO(dto.getQuery(), apiResult.getAddressResult());
+            log.info(historyDTO.toString());
+
+            historyService.saveHistory(historyDTO);
         }
 
         return dtoToJsonString(apiResult);

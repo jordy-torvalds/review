@@ -38,8 +38,14 @@
 
 <script>
 
-  $(document).ready(function(){
+  $('document').ready(function(){
     previousSearch();
+
+    $("#inputAddress").keydown(function(key) {
+        if(key.keyCode == 13) {
+            addressSearch();
+        }
+    });
   });
 
   function addressSearch() {
@@ -51,8 +57,10 @@
       return;
     }
 
+    let query = makeInputString(inputAddress);
+
     const param = {
-      "query" : inputAddress
+      "query" : query
     };
 
    $.ajax({
@@ -69,12 +77,18 @@
           previousSearch();
         } else {
           alert("결과값이 없습니다.");
+          clearText();
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("ERROR : " + textStatus + " : " + errorThrown);
+        clearText();
       }
    });
+  }
+
+  function makeInputString(value) {
+    return value;
   }
 
   function clearText() {
@@ -114,6 +128,7 @@
     $("#dynamicTbody").empty();
     $("#dynamicTbody").append(html);
   }
+
 
 
 
