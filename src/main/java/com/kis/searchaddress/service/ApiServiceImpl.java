@@ -21,7 +21,7 @@ import static com.kis.searchaddress.api.helper.TypeConverter.*;
 public class ApiServiceImpl implements ApiService {
 
     @Autowired
-    WebClientHelper helper;
+    WebClientHelper helper; // Review: default 접근지정자 경우 동일 패키지 내 클래스가 접근이 가능하므로 private 키워드를 붙이는게 좋을거 같습니다.
 
     @Override
     public AddressApiResponseDTO addressApi(ApiRequestDTO dto) throws JsonProcessingException {

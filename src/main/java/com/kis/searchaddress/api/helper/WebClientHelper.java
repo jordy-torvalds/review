@@ -66,7 +66,12 @@ public class WebClientHelper {
         requestUrl.append("?");
         requestUrl.append(paramStr);
         return webClient.get()
-                .uri(requestUrl.toString())
+                .uri(requestUrl.toString()) // review: uri 생성시 uri builder 와 multivalueMap을 잘 혼합해서 사용하면 문자열 조작을 하지 않고도 직관적으로 쿼리파람을 달 수 있을거 같아요 ㅋㅋ
+                /**
+                - webclient querystring 관련: https://www.baeldung.com/webflux-webclient-parameters#single-value-parameters
+                - UriBuilder.queryParam: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriBuilder.html#queryParams-org.springframework.util.MultiValueMap-
+                - LinkedMultiValueMap map param 생성자 : https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/util/LinkedMultiValueMap.html#LinkedMultiValueMap-java.util.Map-
+                 */
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

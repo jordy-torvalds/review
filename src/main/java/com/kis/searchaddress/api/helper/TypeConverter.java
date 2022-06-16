@@ -31,6 +31,7 @@ public class TypeConverter {
         return objectMapper.readValue(str, cls);
     }
 
+    // review: javadoc으로 exception 발생시 empty String("") 이 반환될 수 있음을 알려주면 좋겠네요!
     public static <T> String dtoToJsonString(T dto) {
         String jsonString = "";
         try {
