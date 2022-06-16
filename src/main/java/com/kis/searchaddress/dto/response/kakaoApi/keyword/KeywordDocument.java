@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Document {
+public class KeywordDocument {
     private String id;                  //장소 ID
     private String place_name;          //장소명, 업체명
     private String category_name;       //카테고리 이름
